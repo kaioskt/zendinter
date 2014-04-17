@@ -6,6 +6,8 @@ use Zend\Mvc\MvcEvent;
 use Zend\Mail\Transport\Smtp as SmtpTransport;
 use Zend\Mail\Transport\SmtpOptions;
 
+use SONUser\Auth\Adapter as AuthAdapter;
+
 class Module
 {
     public function getConfig()
@@ -43,7 +45,9 @@ class Module
     								$sm->get('SONUser\Mail\Transport'),
     								$sm->get('View'));
     					},
-    
+    					'SONUser\Auth\Adapter' => function($sm){
+    						return new AuthAdapter($sm->get('Doctrine\ORM\EntityManager'));
+    					}   
     			)
     	);
     
