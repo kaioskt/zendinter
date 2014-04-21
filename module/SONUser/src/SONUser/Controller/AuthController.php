@@ -28,7 +28,7 @@ class AuthController extends AbstractActionController
                 $data = $request->getPost()->toArray();
                 
                 // Criando Storage para gravar sessão da authtenticação
-                $sessionStorage = new SessionStorage();
+                $sessionStorage = new SessionStorage('SONUser');
                 
                 $auth = new AuthenticationService;
                 $auth->setStorage($sessionStorage); // Definindo o SessionStorage para a auth
@@ -41,11 +41,11 @@ class AuthController extends AbstractActionController
                 
                 if($result->isValid())
                 {
-
+                	
                     $user = $auth->getIdentity();
                     $user = $user['user'];
                     $sessionStorage->write($user,null);
-
+                   
                     
                     #$sessionStorage->write($auth->getIdentity()['user'],null);
                     return $this->redirect()->toRoute('sonuser-admin/default',array('controller'=>'users'));
